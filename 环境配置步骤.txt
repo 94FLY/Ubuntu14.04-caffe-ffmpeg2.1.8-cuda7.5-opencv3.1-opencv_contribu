@@ -1,0 +1,39 @@
+最好给ubuntu系统预留50G以上空间，并按下面顺序安装
+
+1.安装Code::Blocks和一些必要库，Code::Blocks以后写程序可能会用
+参照http://blog.csdn.net/i_fuqiang/article/details/9399909安装Code::Blocks的必要环境，
+Code::Blocks本体程序可以在前面的库都安装好之后，在ubuntu软件中心直接搜索安装。
+wxWidgets 可以不安
+
+2.安装视频解码库ffmpeg
+使用我提供的ffmpeg-2.1.8，参照http://www.cnblogs.com/lidabo/p/3987378.html安装。
+其中x264和libvpx可以不装，但是./configure 后面的相应选项--enable-libvpx --enable-libx264也应该删掉。
+安装是否成功，后面在安装opencv中可以检验。
+
+3.编译并安装opencv
+首先去opencv官网下载opencv3.1，以及contrib库，或者使用我提供的
+参照http://blog.csdn.net/hitwengqi/article/details/7292102安装GUI版本的cmake,以及后续的opencv编译。
+在第一次点完configure之后，在输出窗口查找ffmpeg是否找到，同时在上面的配置窗口找到OPENCV_EXTRA_MODULE_PATH，将opencv_contrib库中mudules的路径加入进去，然后再configure,无问题后generate。
+然后按照博客教程编译，make install后在/usr/local/lib中可以看到装好的opencv库文件，以及contrib库中的各种库文件
+
+4.安装cuda。（电脑没有N卡GPU可以跳过此步）
+从https://developer.nvidia.com/cuda-downloads右侧Legacy CUDA Toolkits链接中下载.run版的cuda7.5，
+参照http://m.blog.csdn.net/article/details?id=51882183来安装，安装过程中当出现是否安装OpenGL时，一定要选择否（n）。
+保证安装好之后重启一次电脑，并且添加了环境变量
+（也可以按照官方http://developer.download.nvidia.com/compute/cuda/7.5/Prod/docs/sidebar/CUDA_Quick_Start_Guide.pdf中4.1.5.2来安装，其中第二步重启，然后吧lightdm关闭，第三步中不要加--silent。安装过程中当出现是否安装OpenGL时，一定要选择否。
+安装完成后，参照http://developer.download.nvidia.com/compute/cuda/7.5/Prod/docs/sidebar/CUDA_Quick_Start_Guide.pdf配置cuda环境变量，并且保证安装好之后重启一次电脑。）
+环境变量生效后，在命令行输入nvcc -V，查询cuda是否安装成功。）
+最后cd 到 NVIDIA_CUDA-7.5_Samples/1_Utilities/deviceQuery/里，然后make,编译完成后，运行deviceQuery，能够成功查询到电脑GPU的信息，意味着安装成功。
+
+5.配置caffe
+从https://github.com/BVLC/caffe 下载caffe
+参照官网的安装教程或者http://www.cnblogs.com/denny402/p/5067265.html中的三.4567节安装caffe
+注意：http://www.cnblogs.com/denny402/p/5067265.html里面安装opencv的步骤不需要再执行
+# sudo cp Makefile.config.example Makefile.config之后，要将Makefile.config里面的OPENCV_VERSION := 3前面注释符“#”去掉，因为我们用的opencv3
+最后的cudnn是加速库，若装cudnn，则把Makefile.config中# USE_CUDNN := 1前面的注释符“#”删掉
+若电脑没有GPU，则将Makefile.config中# CPU_ONLY := 1前面的注释符“#”删掉，并且不需要安装cudnn
+
+6.安装过程中会出现各种各样的问题，请大家耐心解决，不用着急
+请大家下载我提供的链接中的数据集myDataSet，后面训练会用到
+
+

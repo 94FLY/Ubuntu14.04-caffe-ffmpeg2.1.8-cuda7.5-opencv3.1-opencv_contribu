@@ -1,0 +1,28 @@
+﻿总体步骤
+http://blog.csdn.net/ubunfans/article/details/47724341/
+
+
+cuda   http://blog.csdn.net/ubunfans/article/details/47724341 文档
+http://developer.download.nvidia.com/compute/cuda/8.0/secure/prod/docs/sidebar/CUDA_Quick_Start_Guide.pdf?autho=1481699020_39cfa58d7c20688d08dccc86414a92db&file=CUDA_Quick_Start_Guide.pdf
+
+
+安装Code::Block
+http://blog.csdn.net/i_fuqiang/article/details/9399909
+安装Code::Blocks的必要环境，
+Code::Blocks本体程序可以在前面的库都安装好之后，在ubuntu软件中心直接搜索安装
+
+
+安装视频解码库ffmpeg
+http://www.cnblogs.com/lidabo/p/3987378.html
+安装ffmpeg-2.1.8
+其中x264和libvpx可以不装，但是./configure 后面的相应选项也应该删掉。
+./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-libfaac --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libtheora --enable-libvorbis --enable-libxvid --enable-shared --prefix=/usr/local
+安装是否成功，后面在安装opencv中可以检验。
+
+
+编译并安装opencv
+http://blog.csdn.net/hitwengqi/article/details/7292102
+首先去opencv官网下载opencv3.1，以及contrib库，或者从我这拷贝
+安装GUI版本的cmake,以及后续的opencv编译。
+在第一次点完configure之后，在输出窗口查找ffmpeg是否找到，同时在上面的配置窗口找到OPENCV_EXTRA_MODULE_PATH，将opencv_contrib库的路径加入进去，然后再configure,无问题后generate。
+然后编译，make install后在/usr/local/lib中可以看到装好的opencv库文件，以及contrib库中的各种库文件
